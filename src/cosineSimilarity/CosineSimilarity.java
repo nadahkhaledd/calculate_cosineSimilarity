@@ -15,20 +15,18 @@ public class CosineSimilarity {
     }
 
     private void buildFiles(String[] docs) {
-        int i = 0;
-        for (String fname : docs) {
+        for (int i=0; i<docs.length; i++) {
             try {
-                documentsName.put(i, fname.substring(5, 8));
+                documentsName.put(i, docs[i].substring(5,8));
                 String file;
                 ArrayList<String> document = null;
-                if ((file = Files.readString(Paths.get(fname))) != null) {
+                if ((file = Files.readString(Paths.get(docs[i]))) != null) {
                     document = new ArrayList<>(Arrays.asList(file.split("\\W+")));
                 }
                 documents.add(document);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            i++;
         }
     }
 
@@ -98,7 +96,39 @@ public class CosineSimilarity {
         return dotProducts;
     }
 
-    void findCosineSimilarity(String[] docs)
+    private HashMap<String, Double> calculateCosineSimilarity(HashMap<String, Double> dotProducts, HashMap<String, Double> magnitudes)
+    {
+        HashMap<String, Double> cosineSimilarities = new HashMap<>();
+        for(String dot: dotProducts.keySet())
+        {
+            String[] splitted_names = dot.split(" ");
+            double denominator = magnitudes.get(splitted_names[0]) * magnitudes.get(splitted_names[2]);
+            double answer = dotProducts.get(dot) / denominator;
+            cosineSimilarities.put(dot, answer);
+        }
+        return cosineSimilarities;
+    }
+
+    HashMap<String, Double> sortByValue(HashMap<String, Double> similarities) {
+        List<Map.Entry<String, Double> > list =
+                new LinkedList<Map.Entry<String, Double> >(similarities.entrySet());
+
+        Collections.sort(list, new Comparator<Map.Entry<String, Double> >() {
+            public int compare(Map.Entry<String, Double> o1,
+                               Map.Entry<String, Double> o2)
+            {
+                return (o2.getValue()).compareTo(o1.getValue());
+            }
+        });
+
+        HashMap<String, Double> temp = new LinkedHashMap<String, Double>();
+        for (Map.Entry<String, Double> s : list) {
+            temp.put(s.getKey(), s.getValue());
+        }
+        return temp;
+    }
+
+    HashMap<String, Double> findCosineSimilarity(String[] docs)
     {
         buildFiles(docs);
         ArrayList<String> table = createTable();
@@ -111,6 +141,9 @@ public class CosineSimilarity {
             dotProducts.putAll(getDotProductWithRespectToOthers(name, TFVector));
             magnitudes.put(name, calculateMagnitude(TFVector.get(name)));
         }
+
+        HashMap<String, Double> cosineSimilarities = calculateCosineSimilarity(dotProducts, magnitudes);
+        return sortByValue(cosineSimilarities);
 
     }
 }
