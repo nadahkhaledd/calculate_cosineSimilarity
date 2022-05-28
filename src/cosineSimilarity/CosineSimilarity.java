@@ -109,7 +109,7 @@ public class CosineSimilarity {
         return cosineSimilarities;
     }
 
-    HashMap<String, Double> sortByValue(HashMap<String, Double> similarities) {
+    private HashMap<String, Double> sortByValue(HashMap<String, Double> similarities) {
         List<Map.Entry<String, Double> > list =
                 new LinkedList<Map.Entry<String, Double> >(similarities.entrySet());
 
