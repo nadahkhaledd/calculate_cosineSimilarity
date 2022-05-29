@@ -1,6 +1,9 @@
 package cosineSimilarity;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class Run {
@@ -21,5 +24,7 @@ public class Run {
             System.out.println(similarity + " " + cosineSimilarities.get(similarity).toString());
 
         }
+
+
     }
 }

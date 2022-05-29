@@ -25,6 +25,10 @@ public class CosineSimilarity {
                 ArrayList<String> document = null;
                 if ((file = Files.readString(Paths.get(docs[i]))) != null) {
                     document = new ArrayList<>(Arrays.asList(file.split("\\W+")));
+                    for(int k=0; k<document.size(); k++)
+                    {
+                        document.set(k, document.get(k).toLowerCase(Locale.ROOT));
+                    }
                 }
                 documents.add(document);
             } catch (IOException e) {
@@ -59,7 +63,6 @@ public class CosineSimilarity {
             }
             TFVector.put(documentsName.get(i), frequencies);
         }
-
         return TFVector;
     }
 
