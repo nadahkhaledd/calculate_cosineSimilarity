@@ -12,6 +12,7 @@ public class Run {
                         "docs/103.txt"};
 
 
+
         HashMap<String, Double> cosineSimilarities = cosineSimilarity.findCosineSimilarity(docs);
 
         System.out.println("Cosine Similarities: ");

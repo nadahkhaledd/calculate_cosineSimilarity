@@ -8,16 +8,19 @@ import java.util.*;
 public class CosineSimilarity {
     private final Map<Integer, String> documentsName;
     private final ArrayList<ArrayList<String>> documents;
+    private final ArrayList<String> documentsNamesInList;
 
     CosineSimilarity() {
         documentsName = new HashMap<>();
         documents = new ArrayList<>();
+        documentsNamesInList = new ArrayList<String>();
     }
 
     private void buildFiles(String[] docs) {
         for (int i=0; i<docs.length; i++) {
             try {
                 documentsName.put(i, docs[i].substring(5,8));
+                documentsNamesInList.add(docs[i].substring(5,8));
                 String file;
                 ArrayList<String> document = null;
                 if ((file = Files.readString(Paths.get(docs[i]))) != null) {
@@ -87,7 +90,7 @@ public class CosineSimilarity {
         HashMap<String, Double> dotProducts = new HashMap<>();
         for(String doc : TFVector.keySet())
         {
-            if(!doc.equalsIgnoreCase(docName))
+            if(documentsNamesInList.indexOf(doc) > documentsNamesInList.indexOf(docName))
             {
                 double dotProduct = calculateDotProduct(docFrequencies, TFVector.get(doc));
                 dotProducts.put((docName + " & " + doc + " -> "), dotProduct);
@@ -108,6 +111,7 @@ public class CosineSimilarity {
         }
         return cosineSimilarities;
     }
+
 
     private HashMap<String, Double> sortByValue(HashMap<String, Double> similarities) {
         List<Map.Entry<String, Double> > list =
