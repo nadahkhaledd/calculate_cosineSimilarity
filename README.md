@@ -1,1 +1,1 @@
-# calculate_cosineSimilarity
+# Calculate Cosine Similarity
