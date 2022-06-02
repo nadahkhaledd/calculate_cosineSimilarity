@@ -36,6 +36,7 @@ public class CosineSimilarity {
             }
         }
     }
+    
 
     private ArrayList<String> createTable()
     {
@@ -47,6 +48,7 @@ public class CosineSimilarity {
         Collections.sort(table);
         return table;
     }
+    
 
     private HashMap<String, ArrayList<Integer>> createTFVector(ArrayList<String> table)
     {
@@ -65,6 +67,7 @@ public class CosineSimilarity {
         }
         return TFVector;
     }
+    
 
     private double calculateDotProduct(ArrayList<Integer> doc1, ArrayList<Integer> doc2)
     {
@@ -74,6 +77,7 @@ public class CosineSimilarity {
 
         return dotProduct;
     }
+    
 
     private double calculateMagnitude(ArrayList<Integer> frequencies)
     {
@@ -86,6 +90,7 @@ public class CosineSimilarity {
 
         return magnitude;
     }
+    
 
     private HashMap<String, Double> getDotProductWithRespectToOthers(String docName, HashMap<String, ArrayList<Integer>> TFVector)
     {
@@ -101,6 +106,7 @@ public class CosineSimilarity {
         }
         return dotProducts;
     }
+    
 
     private HashMap<String, Double> calculateCosineSimilarity(HashMap<String, Double> dotProducts, HashMap<String, Double> magnitudes)
     {
@@ -134,6 +140,7 @@ public class CosineSimilarity {
         }
         return temp;
     }
+    
 
     HashMap<String, Double> findCosineSimilarity(String[] docs)
     {
